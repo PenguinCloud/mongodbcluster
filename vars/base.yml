@@ -2,3 +2,7 @@ run:
   user: ptg-user
 app:
   title: "{{ lookup('ansible.builtin.env', 'APP_TILE') }}"
+
+mongodb:
+  gpgkey: "{{ lookup('ansible.builtin.env', 'MONGODB_GPGKEY') }}"
+  version: "{{ lookup('ansible.builtin.env', 'MONGODB_VERSION') }}"

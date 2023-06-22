@@ -7,9 +7,10 @@ LABEL license="GNU AGPL3"
 COPY . /opt/manager/
 WORKDIR /opt/manager
 
-
 # PUT YER ARGS in here
-ARG APP_TITLE="PTGAPP" # Change this to actual title for Default
+ARG APP_TITLE="MongoDbCluster" # Change this to actual title for Default
+ARG MONGODB_GPGKEY="https://www.mongodb.org/static/pgp/server-6.0.asc"
+ARG MONGODB_VERSION="6.0"
 
 # BUILD IT!
 RUN ansible-playbook build.yml -c local

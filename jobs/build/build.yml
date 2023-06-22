@@ -7,15 +7,15 @@
       - apt-transport-https
       - ca-certificates
     state: present
-    update_cache: true
+    update_cache: yes
 
 - name: Fetch the MongoDB public GPG key
   get_url:
-    url: https://www.mongodb.org/static/pgp/server-6.0.asc
+    url: "{{ mongodb.gpgkey }}"
     dest: "/opt/mongodb.gpg"
 
 - name: Add the MongoDB public GPG key to the system
-  command: gpg --no-default-keyring --keyring /usr/share/keyrings/mongodb-server-6.0.gpg --import /opt/mongodb.gpg
+  shell: gpg --no-default-keyring --keyring /usr/share/keyrings/mongodb-server-{{ mongodb.version }}.gpg --import /opt/mongodb.gpg
 
 - name: Remove temporary MongoDB public GPG key file
   file:
@@ -24,8 +24,8 @@
 
 - name: Add the MongoDB repository
   ansible.builtin.lineinfile:
-    path: /etc/apt/sources.list.d/mongodb-org-6.0.list
-    line: 'deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse'
+    path: /etc/apt/sources.list.d/mongodb-org-{{ mongodb.version }}.list
+    line: 'deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-{{ mongodb.version }}.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/{{ mongodb.version }} multiverse'
     create: yes
 
 - name: Update the package database
