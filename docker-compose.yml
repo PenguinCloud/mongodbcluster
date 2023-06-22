@@ -1,5 +1,22 @@
 ---
 version: "2.4"
 services:
-  app:
-    image: penguintech/core-ansible
+  mongodb1:
+    image: 'penguintech/mongodbcluster'
+    build: .
+    ports:
+      - 3306:3306 
+      - 4444:4444 
+      - 4567:4567 
+      - 4568:4568 
+    networks:
+      - mongodbcluster
+    healthcheck:
+      test: ["CMD", "ansible-playbook", "entrypoint.yml", "--tag", "test"]
+      interval: 5m
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+
+networks:
+  mongodbcluster:
