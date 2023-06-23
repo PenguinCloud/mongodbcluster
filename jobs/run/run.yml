@@ -1,0 +1,5 @@
+---
+- name: Configure template file
+  template:
+    src: templates/mongod_conf.j2
+    dest: /opt/mongodb/mongod.conf

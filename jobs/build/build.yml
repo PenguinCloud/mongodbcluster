@@ -46,11 +46,13 @@
     owner: "{{ run.user }}"
     group: "{{ run.user}}"
 
-- name: Change permission of config file
+
+- name: Recursively change ownership of directory
   file:
-    path: /etc/mongod.conf
+    path: /opt/mongodb
+    state: directory
     owner: "{{ run.user }}"
-    group: "{{ run.user }}"
+    group: "{{ run.user}}"
 
 - name: Recursively change ownership of directory
   file:
