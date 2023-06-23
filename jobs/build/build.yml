@@ -6,6 +6,7 @@
       - gnupg
       - apt-transport-https
       - ca-certificates
+      - python3-pymongo
     state: present
     update_cache: true
 

@@ -10,6 +10,14 @@
     roles: userAdminAnyDatabase
     state: present
 
+- name: Connect and shutdown mongodb
+  shell:
+    cmd: |
+      mongosh --port 27017 <<EOF
+      use admin
+      db.shutdownServer()
+      EOF
+
 - name: Template the config file
   template:
     src: templates/mongod_conf.j2
