@@ -6,3 +6,5 @@ app:
 mongodb:
   gpgkey: "{{ lookup('ansible.builtin.env', 'MONGODB_GPGKEY') }}"
   version: "{{ lookup('ansible.builtin.env', 'MONGODB_VERSION') }}"
+  admin_username: "{{ lookup('ansible.builtin.env', 'MONGODB_ADMIN') }}"
+  admin_password: "{{ lookup('ansible.builtin.env', 'MONGODB_ADMIN_PASSWORD') }}"

@@ -1,5 +1,16 @@
 ---
-- name: Configure template file
+- name: Start mongodb
+  shell: mongod &
+
+- name: Create admin user
+  community.mongodb.mongodb_user:
+    database: admin
+    name: "{{ mongodb.admin_username }}"
+    password: "{{ mongodb.admin_password }}"
+    roles: userAdminAnyDatabase
+    state: present
+
+- name: Template the config file
   template:
     src: templates/mongod_conf.j2
     dest: /opt/mongodb/mongod.conf

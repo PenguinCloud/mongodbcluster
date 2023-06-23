@@ -16,7 +16,8 @@ ARG MONGODB_VERSION="6.0"
 RUN ansible-playbook build.yml -c local
 
 # PUT YER ENVS in here
-ENV HELLO="WORLD"
+ENV MONGODB_ADMIN="someone"
+ENV MONGODB_ADMIN_PASSWORD="p@ssword"
 
 # Switch to non-root user
 USER ptg-user
