@@ -1,5 +1,5 @@
 ---
-- name: PROJECT NAME
+- name: Mongodbcluster
   hosts: localhost
   connection: local
   vars_files:

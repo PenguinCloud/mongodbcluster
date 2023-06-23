@@ -7,7 +7,7 @@
       - apt-transport-https
       - ca-certificates
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: Fetch the MongoDB public GPG key
   get_url:
@@ -26,14 +26,44 @@
   ansible.builtin.lineinfile:
     path: /etc/apt/sources.list.d/mongodb-org-{{ mongodb.version }}.list
     line: 'deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-{{ mongodb.version }}.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/{{ mongodb.version }} multiverse'
-    create: yes
+    create: true
 
 - name: Update the package database
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
 
 - name: Install MongoDB
   ansible.builtin.apt:
     name: mongodb-org
     state: present
-    update_cache: yes
+    update_cache: true
+
+- name: Recursively change ownership of directory
+  file:
+    path: /var/lib/mongodb
+    state: directory
+    recurse: yes
+    owner: "{{ run.user }}"
+    group: "{{ run.user}}"
+
+- name: Change permission of config file
+  file:
+    path: /etc/mongod.conf
+    owner: "{{ run.user }}"
+    group: "{{ run.user }}"
+
+- name: Recursively change ownership of directory
+  file:
+    path: /var/log/mongodb
+    state: directory
+    recurse: yes
+    owner: "{{ run.user }}"
+    group: "{{ run.user}}"
+
+- name: Create data directory 
+  file:
+    path: /data/db
+    state: directory
+    mode: '0755'
+    owner: "{{ run.user }}"
+    group: "{{ run.user}}"
