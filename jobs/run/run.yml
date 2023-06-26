@@ -23,6 +23,11 @@
   args:
     creates: /opt/mongodb/mongo.key
 
+- name: Set MongoDB keyfile permissions
+  ansible.builtin.file:
+    path: /opt/mongodb/mongo.key
+    mode: '0400'    
+
 
 - name: Template the config file
   template:

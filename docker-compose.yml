@@ -6,6 +6,8 @@ services:
     build: .
     ports:
       - "27017:27017"
+    volumes:
+     - shared-data:/etc/mongo
     networks:
       - mongodbcluster
     healthcheck:
