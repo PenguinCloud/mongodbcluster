@@ -18,6 +18,7 @@ RUN ansible-playbook build.yml -c local
 # PUT YER ENVS in here
 ENV MONGODB_ADMIN="someone"
 ENV MONGODB_ADMIN_PASSWORD="p@ssword"
+ENV REPLICA_SET_NAME="ptg_replica"
 
 # Switch to non-root user
 USER ptg-user

@@ -18,6 +18,12 @@
       db.shutdownServer()
       EOF
 
+- name: Generate MongoDB keyfile
+  ansible.builtin.shell: openssl rand -base64 756 > /opt/mongodb/mongo.key
+  args:
+    creates: /opt/mongodb/mongo.key
+
+
 - name: Template the config file
   template:
     src: templates/mongod_conf.j2

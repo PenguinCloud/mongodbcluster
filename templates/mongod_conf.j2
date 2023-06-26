@@ -26,10 +26,12 @@ processManagement:
 
 security:
   authorization: enabled
+  keyFile: /opt/mongodb/mongo.key
 
 #operationProfiling:
 
-#replication:
+replication:
+  replSetName: {{ replica_set_name }}
 
 #sharding:
 

@@ -8,3 +8,5 @@ mongodb:
   version: "{{ lookup('ansible.builtin.env', 'MONGODB_VERSION') }}"
   admin_username: "{{ lookup('ansible.builtin.env', 'MONGODB_ADMIN') }}"
   admin_password: "{{ lookup('ansible.builtin.env', 'MONGODB_ADMIN_PASSWORD') }}"
+
+replica_set_name: "{{ lookup('ansible.builtin.env', 'REPLICA_SET_NAME') }}"
