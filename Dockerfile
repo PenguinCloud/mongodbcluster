@@ -10,7 +10,8 @@ WORKDIR /opt/manager
 # PUT YER ARGS in here
 ARG APP_TITLE="MongoDbCluster" # Change this to actual title for Default
 ARG MONGODB_GPGKEY="https://www.mongodb.org/static/pgp/server-6.0.asc"
-ARG MONGODB_VERSION="6.0"
+ARG MONGODB_VERSION="6.0" 
+ARG PRIMARY_CLUSTER="1"
 
 # BUILD IT!
 RUN ansible-playbook build.yml -c local
