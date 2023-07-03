@@ -17,18 +17,18 @@
       use admin
       db.shutdownServer()
       EOF
+- block:
+  - name: Generate MongoDB keyfile
+    ansible.builtin.shell: openssl rand -base64 756 > /opt/mongodb/mongo.key
 
-- name: Generate MongoDB keyfile
-  ansible.builtin.shell: openssl rand -base64 756 > /opt/mongodb/mongo.key
-  args:
-    creates: /opt/mongodb/mongo.key
+  - name: Set MongoDB keyfile permissions
+    ansible.builtin.file:
+      path: /opt/mongodb/mongo.key
+      mode: '0400'    
 
-- name: Set MongoDB keyfile permissions
-  ansible.builtin.file:
-    path: /opt/mongodb/mongo.key
-    mode: '0400'    
+  when: primary_cluster == "1"
 
-
+  
 - name: Template the config file
   template:
     src: templates/mongod_conf.j2
