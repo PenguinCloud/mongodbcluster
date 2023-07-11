@@ -1,7 +1,7 @@
 [![Publish Docker image](https://github.com/PenguinCloud/project-template/actions/workflows/docker-image.yml/badge.svg)](https://github.com/PenguinCloud/core/actions/workflows/docker-image.yml) [![version](https://img.shields.io/badge/version-5.1.1-blue.svg)](https://semver.org) 
 
-# Project Overview
-<< This is a template. Copy this templated repository to make new projects. Once done, add a 1 paragraph introduction / elevator speech about your project.
+# MongoDB Cluster
+A MongoDB replication cluster is a distributed system that ensures high availability and fault tolerance for your database. It consists of multiple interconnected nodes, with one serving as the primary node and others as secondary nodes. The primary node handles write operations and replicates data to the secondary nodes in real-time. If the primary node fails, a new one is automatically elected from the available secondary nodes. This cluster provides data redundancy, seamless failover, and scalability for read-intensive workloads, making it a reliable and efficient solution for your database needs.
 >>
 # Why this image vs others
 ## Built in self testing and healing
