@@ -1,3 +1,8 @@
 ---
 - name: Start mongodb
   shell: mongod --config /opt/mongodb/mongod.conf &
+
+- name: Join nodes to replication cluster
+  shell: |
+    echo "rs.add('{{ item }}:27017')" | mongosh -u {{ mongodb.admin_username }} -p {{ mongodb.admin_password }} --authenticationDatabase admin
+  loop: "{{ replica_set_members.split(' ') }}"
