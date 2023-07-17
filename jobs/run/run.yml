@@ -2,22 +2,34 @@
 - name: Start mongodb
   shell: mongod &
 
-- name: Create admin user
-  community.mongodb.mongodb_user:
-    database: admin
-    name: "{{ mongodb.admin_username }}"
-    password: "{{ mongodb.admin_password }}"
-    roles: userAdminAnyDatabase
-    state: present
+- name: Check MongoDB process
+  shell: ps -ef | grep mongod | grep -v grep
+  register: mongod_process
+  changed_when: false
+  retries: 5
+  delay: 10
+  until: mongod_process.rc == 0
+  ignore_errors: true
 
-- name: Connect and shutdown mongodb
-  shell:
-    cmd: |
-      mongosh --port 27017 <<EOF
-      use admin
-      db.shutdownServer()
-      EOF
-  
+- name: Display MongoDB status
+  debug:
+    msg: "MongoDB is {{ 'running' if mongod_process.stdout else 'not running' }}"
+
+- name: Create admin user
+  shell: 
+    cmd: >
+      mongosh admin --eval 'db.createUser({ user: "{{ mongodb.admin_username }}", pwd: "{{ mongodb.admin_password }}", roles: [ { role: "root", db: "admin" } ] })'
+
+- name: Find MongoDB process ID
+  shell: "pgrep mongod"
+  register: mongod_pid
+  changed_when: false
+  failed_when: mongod_pid.stdout == ""
+
+- name: Stop MongoDB
+  shell: "kill {{ mongod_pid.stdout }}"
+  when: mongod_pid.stdout != ""
+
 - name: Template the config file
   template:
     src: templates/mongod_conf.j2
