@@ -55,6 +55,13 @@
     owner: "{{ run.user }}"
     group: "{{ run.user}}"
 
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: /etc/mongod.conf
+    dest: /opt/mongodb/mongod.conf
+    owner: "{{ run.user }}"
+    group: "{{ run.user }}"
+
 - name: Recursively change ownership of directory
   file:
     path: /var/log/mongodb

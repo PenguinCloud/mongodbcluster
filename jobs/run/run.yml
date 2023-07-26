@@ -1,6 +1,6 @@
 ---
 - name: Start mongodb
-  shell: mongod &
+  shell: mongod --config /opt/mongodb/mongod.conf &
 
 - name: Check MongoDB process
   shell: ps -ef | grep mongod | grep -v grep
@@ -34,3 +34,4 @@
   template:
     src: templates/mongod_conf.j2
     dest: /opt/mongodb/mongod.conf
+    force: true
