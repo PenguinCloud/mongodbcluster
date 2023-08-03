@@ -2,7 +2,20 @@
 - name: Start mongodb
   shell: mongod --config /opt/mongodb/mongod.conf &
 
-# - name: Join nodes to replication cluster
-#  shell: |
-#    echo "rs.add('{{ item }}:27017')" | mongosh -u {{ mongodb.admin_username }} -p {{ mongodb.admin_password }} --authenticationDatabase admin
-#  loop: "{{ replica_set_members.split(' ') }}"
+- name: Initiate the Replica Set
+  mongodb_replicaset:
+    login_user: someone
+    login_password: p@ssword
+    rs_hosts: mongodb1:27017
+    rs_initiate: yes
+  when: primary_cluster == "1"
+
+- name: Add Member to the Replica Set
+  mongodb_replicaset:
+    login_user: someone
+    login_password: p@ssword
+    rs_hosts: mongodb1:27017
+    rs_add:
+      host: mongodb2:27017
+  when: primary_cluster == "1"
+ 

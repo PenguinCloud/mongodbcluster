@@ -1,0 +1,21 @@
+- name: Test MongoDB login
+  community.mongodb.mongodb_user:
+    login_host: mongodb1
+    login_port: 27017
+    database: admin
+    name: "{{ mongodb.admin_username }}"
+    password: "{{ mongodb.admin_password }}"
+    state: present
+  register: login_result
+  ignore_errors: true
+  when: primary_cluster == "1"
+
+- name: Check login status
+  debug:
+    msg: "User login successful"
+  when: primary_cluster == "1" and login_result is success
+
+- name: Handle login failure
+  fail:
+    msg: "User login failed. Please check credentials."
+  when: primary_cluster == "1" and login_result is failed

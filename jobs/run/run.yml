@@ -16,9 +16,16 @@
     msg: "MongoDB is {{ 'running' if mongod_process.stdout else 'not running' }}"
 
 - name: Create admin user
-  shell: 
-    cmd: >
-      mongosh admin --eval 'db.createUser({ user: "{{ mongodb.admin_username }}", pwd: "{{ mongodb.admin_password }}", roles: [ { role: "root", db: "admin" } ] })'
+  community.mongodb.mongodb_user:
+    login_host: mongodb1
+    login_port: 27017
+    database: admin
+    name: "{{ mongodb.admin_username }}"
+    password: "{{ mongodb.admin_password }}"
+    roles:
+      - { role: "root", db: "admin" }
+    state: present
+  when: primary_cluster == "1"
 
 - name: Find MongoDB process ID
   shell: "pgrep mongod"
