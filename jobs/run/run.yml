@@ -15,16 +15,21 @@
   debug:
     msg: "MongoDB is {{ 'running' if mongod_process.stdout else 'not running' }}"
 
-- name: Create admin user
+- name: Create new admin user
   community.mongodb.mongodb_user:
-    login_host: mongodb1
-    login_port: 27017
     database: admin
-    name: "{{ mongodb.admin_username }}"
-    password: "{{ mongodb.admin_password }}"
+    name: someone
+    password: p@ssword
     roles:
       - { role: "root", db: "admin" }
     state: present
+    connection_options:
+      - readPreference=primary
+  when: primary_cluster == "1"
+
+- name: Create a database
+  shell: 
+    cmd: mongosh --username someone --password p@ssword --eval 'db.getSiblingDB("mydatabase").createCollection("dummy")'
   when: primary_cluster == "1"
 
 - name: Find MongoDB process ID
