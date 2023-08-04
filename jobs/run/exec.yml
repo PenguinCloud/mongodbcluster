@@ -18,40 +18,37 @@
   when: primary_cluster == "1"
 
 - name: Execute MongoDB Initialization
-  hosts: localhost
-  tasks:
-    - block:
-        - name: Run initialisation task
-          shell:
-            cmd: mongosh --username someone --password 'p@ssword' --eval 'rs.initiate()'
-          when: primary_cluster == "1"
-          register: result
-          until: result is success or retry_count >= 3
-          retries: 3
-          delay: 10
-          vars:
-            retry_count: 0
-      rescue:
-        - name: Handle failed task
-          debug:
-            msg: "Retrying the task"
-          when: result is failed
+  block:
+    - name: Run initialization task
+      shell:
+        cmd: mongosh --username someone --password 'p@ssword' --eval 'rs.initiate()'
+      when: primary_cluster == "1"
+      register: result
+      until: result is success or retry_count >= 3
+      retries: 3
+      delay: 10
+      vars:
+        retry_count: 0
 
-        - name: Handle rescue scenario
-          debug:
-            msg: "Rescue scenario encountered"
-          when: result is failed
+    - name: Handle failed task
+      debug:
+        msg: "Retrying the task"
+      when: result is failed
 
+  rescue:
+    - name: Handle rescue scenario
+      debug:
+        msg: "Rescue scenario encountered"
 
-# - name: Create new replicaset
-#   community.mongodb.mongodb_replicaset:
-#     login_host: mongodb1
-#     login_port: 27017
-#     login_user: someone
-#     login_password: p@ssword
-#     replica_set: "{{ replica_set_name }}"
-#     members:
-#       - mongodb1:27017
-#       - mongodb2:27017
-#   when: primary_cluster == "1"
+- name: Create new replicaset
+  community.mongodb.mongodb_replicaset:
+    login_host: mongodb1
+    login_port: 27017
+    login_user: someone
+    login_password: p@ssword
+    replica_set: "{{ replica_set_name }}"
+    members:
+      - mongodb1:27017
+      - mongodb2:27017
+  when: primary_cluster == "1"
     
