@@ -22,7 +22,7 @@ ENV MONGODB_ADMIN_PASSWORD="p@ssword"
 ENV DATABASE_NAME="ptg-database"
 ENV REPLICA_SET_NAME="ptg_replica"
 ENV PRIMARY_CLUSTER="1"
-ENV REPLICA_SET="mongodb2"
+ENV REPLICA_SET_MEMBERS="mongodb2:27017"
 
 # Switch to non-root user
 USER ptg-user

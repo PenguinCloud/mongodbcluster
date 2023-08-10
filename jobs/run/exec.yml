@@ -40,9 +40,9 @@
       debug:
         msg: "Rescue scenario encountered"
 
-- name: Add a member to the replica set using shell
-  shell:
-    cmd: >
-      mongosh mongodb1:27017 -u "{{ mongodb.admin_username }}" -p "{{ mongodb.admin_password }}"
-      --eval "rs.add('mongodb2:27017')"
+- name: Add members using shell
+  shell: >
+    mongosh mongodb1:27017 -u "{{ mongodb.admin_username }}" -p "{{ mongodb.admin_password }}" \
+    --eval "rs.add('{{ item | string }}')"
+  loop: "{{ replica_set_members | string | split(',') }}"
   when: primary_cluster == "1"
