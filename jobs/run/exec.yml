@@ -40,15 +40,9 @@
       debug:
         msg: "Rescue scenario encountered"
 
-- name: Create new replicaset
-  community.mongodb.mongodb_replicaset:
-    login_host: mongodb1
-    login_port: 27017
-    login_user: someone
-    login_password: p@ssword
-    replica_set: "{{ replica_set_name }}"
-    members:
-      - mongodb1:27017
-      - mongodb2:27017
+- name: Add a member to the replica set using shell
+  shell:
+    cmd: >
+      mongosh mongodb1:27017 -u someone -p p@ssword
+      --eval "rs.add('mongodb2:27017')"
   when: primary_cluster == "1"
-    
