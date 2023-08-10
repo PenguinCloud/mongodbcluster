@@ -19,6 +19,7 @@ RUN ansible-playbook build.yml -c local
 # PUT YER ENVS in here
 ENV MONGODB_ADMIN="someone"
 ENV MONGODB_ADMIN_PASSWORD="p@ssword"
+ENV DATABASE_NAME="ptg-database"
 ENV REPLICA_SET_NAME="ptg_replica"
 ENV PRIMARY_CLUSTER="1"
 ENV REPLICA_SET="mongodb2"

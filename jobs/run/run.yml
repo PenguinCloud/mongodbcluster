@@ -18,8 +18,8 @@
 - name: Create new admin user
   community.mongodb.mongodb_user:
     database: admin
-    name: someone
-    password: p@ssword
+    name: "{{ mongodb.admin_username }}"
+    password: "{{ mongodb.admin_password }}"
     roles:
       - { role: "root", db: "admin" }
     state: present
@@ -28,8 +28,8 @@
   when: primary_cluster == "1"
 
 - name: Create a database
-  shell: 
-    cmd: mongosh --username someone --password p@ssword --eval 'db.getSiblingDB("mydatabase").createCollection("dummy")'
+  shell:
+    cmd: mongosh --username "{{ mongodb.admin_username }}" --password "{{ mongodb.admin_password }}" --eval 'db.getSiblingDB("{{ mongodb.database_name }}").createCollection("dummy")'
   when: primary_cluster == "1"
 
 - name: Find MongoDB process ID

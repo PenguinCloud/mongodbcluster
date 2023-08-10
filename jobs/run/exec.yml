@@ -21,7 +21,7 @@
   block:
     - name: Run initialization task
       shell:
-        cmd: mongosh --username someone --password 'p@ssword' --eval 'rs.initiate()'
+        cmd: mongosh --username "{{ mongodb.admin_username }}" --password "{{ mongodb.admin_password }}" --eval 'rs.initiate()'
       when: primary_cluster == "1"
       register: result
       until: result is success or retry_count >= 3
@@ -43,6 +43,6 @@
 - name: Add a member to the replica set using shell
   shell:
     cmd: >
-      mongosh mongodb1:27017 -u someone -p p@ssword
+      mongosh mongodb1:27017 -u "{{ mongodb.admin_username }}" -p "{{ mongodb.admin_password }}"
       --eval "rs.add('mongodb2:27017')"
   when: primary_cluster == "1"
