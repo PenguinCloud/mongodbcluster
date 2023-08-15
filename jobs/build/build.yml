@@ -87,5 +87,5 @@
         path: /opt/mongodb/mongo.key
         mode: '0400'
         owner: "{{ run.user }}"
-        group: "{{ run.user}}"   
+        group: "{{ run.user}}"
       when: primary_cluster == "1"
