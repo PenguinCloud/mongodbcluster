@@ -30,8 +30,8 @@
 - name: Create a database
   shell:
     cmd: >
-     mongosh --username "{{ mongodb.admin_username }}" 
-     --password "{{ mongodb.admin_password }}" 
+     mongosh --username "{{ mongodb.admin_username }}"
+     --password "{{ mongodb.admin_password }}"
      --eval 'db.getSiblingDB("{{ mongodb.database_name }}").createCollection("dummy")'
   when: primary_cluster == "1"
 
