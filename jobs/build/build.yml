@@ -26,7 +26,9 @@
 - name: Add the MongoDB repository
   ansible.builtin.lineinfile:
     path: /etc/apt/sources.list.d/mongodb-org-{{ mongodb.version }}.list
-    line: 'deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-{{ mongodb.version }}.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/{{ mongodb.version }} multiverse'
+    line: >-
+      deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-{{ mongodb.version }}.gpg ]
+      https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/{{ mongodb.version }} multiverse
     create: true
 
 - name: Update the package database
