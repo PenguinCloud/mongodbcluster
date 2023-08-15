@@ -1,7 +1,7 @@
 ---
 - name: Install required packages
   apt:
-    name: 
+    name:
       - software-properties-common
       - gnupg
       - apt-transport-https
@@ -43,7 +43,7 @@
   file:
     path: /var/lib/mongodb
     state: directory
-    recurse: yes
+    recurse: true
     owner: "{{ run.user }}"
     group: "{{ run.user}}"
 
@@ -66,11 +66,11 @@
   file:
     path: /var/log/mongodb
     state: directory
-    recurse: yes
+    recurse: true
     owner: "{{ run.user }}"
     group: "{{ run.user}}"
 
-- name: Create data directory 
+- name: Create data directory
   file:
     path: /data/db
     state: directory
@@ -79,14 +79,13 @@
     group: "{{ run.user}}"
 
 - block:
-  - name: Generate MongoDB keyfile
-    ansible.builtin.shell: openssl rand -base64 756 > /opt/mongodb/mongo.key
+    - name: Generate MongoDB keyfile
+      ansible.builtin.shell: openssl rand -base64 756 > /opt/mongodb/mongo.key
 
-  - name: Set MongoDB keyfile permissions
-    ansible.builtin.file:
-      path: /opt/mongodb/mongo.key
-      mode: '0400' 
-      owner: "{{ run.user }}"
-      group: "{{ run.user}}"   
-
-  when: primary_cluster == "1"
+    - name: Set MongoDB keyfile permissions
+      ansible.builtin.file:
+        path: /opt/mongodb/mongo.key
+        mode: '0400'
+        owner: "{{ run.user }}"
+        group: "{{ run.user}}"   
+      when: primary_cluster == "1"
