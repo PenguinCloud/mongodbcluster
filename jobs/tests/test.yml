@@ -25,5 +25,3 @@
   debug:
     msg: "MongoDB is {{ 'running' if mongod_process.stdout else 'not running' }}"
  
-
-
