@@ -7,7 +7,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-     - shared-data:/etc/mongo
+      - shared-data:/etc/mongo
     networks:
       - mongodbcluster
     healthcheck:
@@ -23,7 +23,7 @@ services:
     ports:
       - "27018:27017"
     volumes:
-     - shared-data:/etc/mongo
+      - shared-data:/etc/mongo
     networks:
       - mongodbcluster
     environment:
