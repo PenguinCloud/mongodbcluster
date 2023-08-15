@@ -1,7 +1,7 @@
 ---
 - name: Check replica set status using shell
   shell:
-    cmd:  >
+    cmd: >
       mongosh mongodb1:27017 -u someone -p p@ssword
       --eval "rs.status()"
   register: rs_status_output

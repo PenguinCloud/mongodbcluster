@@ -46,3 +46,4 @@
     --eval "rs.add('{{ item | string }}')"
   loop: "{{ replica_set_members | string | split(',') }}"
   when: primary_cluster == "1"
+  
